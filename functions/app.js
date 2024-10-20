@@ -5,12 +5,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import serverless from "serverless-http";
-import { refresh, signin, signup } from "../controllers/AuthController.js";
-import { addSingle, data, user } from "../controllers/ReadingController.js";
-
-
-const router = Router();
-
+import { refresh, signin, signup } from "./controllers/AuthController.js";
+import { addSingle, data, user } from "./controllers/ReadingController.js";
 
 dotenv.config();
 
@@ -27,9 +23,10 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+const router = Router();
+app.use(router);
 app.use("/.netlify/functions/app", router);
-
-
 router.get("/", (req, res) => {
     res.send("App is running..");
 });
@@ -49,4 +46,4 @@ mongoose
     .connect(databaseURL)
     .then(() => console.log("DB connected!"));
 
-module.exports.handler = serverless(app);
+export default serverless(app);

@@ -1,24 +1,21 @@
-import { Router } from "express";
-import { addSingle, data, user } from "../controllers/ReadingController.js";
+// import { Router } from "express";
 
-const readRoutes = Router();
+// const readRoutes = Router();
 
-readRoutes.get("/addsingle", addSingle);
-readRoutes.post("/data", data);
-readRoutes.get("/user", user);
-export default readRoutes
 
-/*
+// export default readRoutes
 
-Endpoints -
+// /*
 
-for sending one dataslot at a time 
+// Endpoints -
 
-/api/addsingle [2 or 5min delay averaging]
-/api/voltage
-/api/current
-/api/power
-/api/aEnergy
-/api/userdetail
+// for sending one dataslot at a time 
 
-*/
+// /api/addsingle [2 or 5min delay averaging]
+// /api/voltage
+// /api/current
+// /api/power
+// /api/aEnergy
+// /api/userdetail
+
+// */
