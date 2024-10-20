@@ -5,8 +5,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import serverless from "serverless-http";
-import authRoutes from "./routes/AuthRoutes.js";
-import readRoutes from "./routes/ReadingRoutes.js";
+import { refresh, signin, signup } from "../controllers/AuthController.js";
+import { addSingle, data, user } from "../controllers/ReadingController.js";
+
+
+const router = Router();
+
 
 dotenv.config();
 
@@ -23,11 +27,19 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use("/.netlify/functions/app", router);
 
-app.use("/api/auth", authRoutes)
-app.use("/api", readRoutes)
 
-app.use("/.netlify/functions/app", Router);
+router.get("/", (req, res) => {
+    res.send("App is running..");
+});
+router.post("/api/auth/signup", signup);
+router.post("/api/auth/signin", signin);
+router.post("/api/auth/refresh", refresh);
+router.get("/api/addsingle", addSingle);
+router.post("/api/data", data);
+router.get("/api/user", user);
+
 
 const server = app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
@@ -37,4 +49,4 @@ mongoose
     .connect(databaseURL)
     .then(() => console.log("DB connected!"));
 
-export default serverless(app);
+module.exports.handler = serverless(app);
